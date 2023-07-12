@@ -38,9 +38,9 @@ const difficultyTypes = ["beginner", "intermediate", "expert"];
 router.get("/", async (req, res) => {
   try {
     // available varialbes
-    var muscle = "";
-    var difficulty = "intermediate";
-    var type = "cardio";
+    var muscle = req.body.muscle;
+    var difficulty = req.body.difficulty;
+    var type = req.body.type;
     var offset = "";
     request.get(
       {
