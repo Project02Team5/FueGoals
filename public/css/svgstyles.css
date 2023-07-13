@@ -31,5 +31,16 @@ path#core:hover {
 }
 
 div#bodyDiagram {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-content: center;
+}
+
+#svg2 {
+    width: auto;
+    height: 75vh;
+}
+
+#bodyDiagram {
     text-align: center;
 }
