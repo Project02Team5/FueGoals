@@ -1,0 +1,32 @@
+[
+  {
+    "user_id": 1,
+    "activity_type": "cardio",
+    "activity_performed": "Rower",
+    "activity_duration": 35
+  },
+  {
+    "user_id": 1,
+    "activity_type": "cardio",
+    "activity_performed": "Rower",
+    "activity_duration": 40
+  },
+  {
+    "user_id": 1,
+    "activity_type": "cardio",
+    "activity_performed": "Rower",
+    "activity_duration": 15
+  },
+  {
+    "user_id": 1,
+    "activity_type": "cardio",
+    "activity_performed": "Rower",
+    "activity_duration": 35
+  },
+  {
+    "user_id": 1,
+    "activity_type": "flexibility",
+    "activity_performed": "Seated Calf Stretch",
+    "activity_duration": 15
+  }
+]

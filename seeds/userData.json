@@ -2,7 +2,14 @@
   {
     "name": "Sal",
     "email": "sal@hotmail.com",
-    "password": "password12345"
+    "password": "password12345",
+    "activity_interval": 30,
+    "cardio_frequency": 8,
+    "strength_frequency": 4,
+    "flexibility_frequency": 4,
+    "cardio_duration": 30,
+    "strength_duration": 20,
+    "flexibility_duration": 20
   },
   {
     "name": "Lernantino",
