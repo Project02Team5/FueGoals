@@ -29,3 +29,7 @@ path#core {
 path#core:hover {
     fill: orange
 }
+
+div#bodyDiagram {
+    text-align: center;
+}
