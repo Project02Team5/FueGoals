@@ -41,8 +41,20 @@ div#bodyDiagram {
     height: 75vh;
 }
 
-span#bodyDiagram {
+span#bodyContainer {
     display: flex;
-    align-content: center;
-    justify-content: center;
+    contain: content;
+    justify-content: space-around;
+}
+
+span#bodySVG {
+    opacity: .5;
+}
+
+.bodyViewL {
+    width: 15vw;
+}
+
+.bodyViewR {
+    width: 15vw;
 }
