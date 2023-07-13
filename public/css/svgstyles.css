@@ -41,6 +41,8 @@ div#bodyDiagram {
     height: 75vh;
 }
 
-#bodyDiagram {
-    text-align: center;
+span#bodyDiagram {
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
