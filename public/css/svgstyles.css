@@ -58,3 +58,7 @@ span#bodySVG {
 .bodyViewR {
     width: 15vw;
 }
+
+#aboveBodyTitle {
+    text-align: center;
+}

@@ -9,7 +9,15 @@ var leftEl = document.querySelector('.bodyViewL');
 function bodyPartSelector(event) {
     console.log(event.target.id);
     //   stats can be added here eventually
-    leftEl.textContent = event.target.id;
+    if (event.target.id === 'head') {
+        leftEl.textContent = "Cardio";
+    } else if (event.target.id === 'upperBody') {
+        leftEl.textContent = "Upper Body";
+    } else if (event.target.id === 'legs') {
+        leftEl.textContent = "Legs";
+    } else if (event.target.id === 'core') {
+        leftEl.textContent = "Core";
+    }
 
     //   can use this to generate exercises on the right *modals for when you choose the exercise give it the correct params? maybe the params can be set by type as cardio usually is duration and other exercises are reps based.
     if (event.target.id === 'head') {
