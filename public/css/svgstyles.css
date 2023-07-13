@@ -1,0 +1,31 @@
+path#upperBody {
+    fill: red
+}
+
+path#upperBody:hover {
+    fill: black
+}
+
+path#head {
+    fill: green
+}
+
+path#head:hover {
+    fill: red
+}
+
+path#legs {
+    fill: pink
+}
+
+path#legs:hover {
+    fill: yellow
+}
+
+path#core {
+    fill: chartreuse
+}
+
+path#core:hover {
+    fill: orange
+}
