@@ -32,10 +32,18 @@ Activity.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    activity_sets: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     strength_weight: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    workout_completed: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    }
   },
   {
     sequelize,
