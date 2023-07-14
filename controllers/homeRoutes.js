@@ -45,4 +45,24 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/dashboard', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.session.user_id, {
+      include: { model: Activity },
+    });
+
+    let users = [];
+    if (userData) {
+      users = userData.get({ plain: true });
+    }
+
+    res.render('dashboard', {
+      users,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 module.exports = router;
