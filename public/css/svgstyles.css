@@ -1,33 +1,37 @@
 path#upperBody {
-    fill: red
+    opacity: 0;
 }
 
 path#upperBody:hover {
-    fill: black
+    fill: black;
+    opacity: 1;
 }
 
 path#head {
-    fill: green
+    opacity: 0;
 }
 
 path#head:hover {
-    fill: red
+    fill: red;
+    opacity: 1;
 }
 
 path#legs {
-    fill: pink
+    opacity: 0;
 }
 
 path#legs:hover {
-    fill: yellow
+    fill: yellow;
+    opacity: 1;
 }
 
 path#core {
-    fill: chartreuse
+    opacity: 0;
 }
 
 path#core:hover {
-    fill: orange
+    opacity: 1;
+    fill: orange;
 }
 
 div#bodyDiagram {
