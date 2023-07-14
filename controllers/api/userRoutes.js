@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     const dbUserData = await User.create(req.body);
 
     req.session.save(() => {
-      req.session.loggedIn = true;
+      req.session.logged_in = true;
 
       res.status(200).json(dbUserData);
     });
@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-// adding random words
 
 router.post('/login', async (req, res) => {
   try {
