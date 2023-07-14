@@ -1,14 +1,17 @@
 module.exports = {
-  get_emoji: () => {
-    const randomNum = Math.random();
-    let book = "📗";
-
-    if (randomNum > 0.7) {
-      book = "📘";
-    } else if (randomNum > 0.4) {
-      book = "📙";
+  format_date: (date) => {
+      // Format date as MM/DD/YYYY
+      return date.toLocaleDateString();
+  },
+  eq: function (a, b) {
+    return a == b;
+  },
+  cap: function (string) {
+ 
+    if (!string) {
+      return string;
     }
 
-    return `<span for="img" aria-label="book">${book}</span>`;
+    return string.charAt(0).toUpperCase() + string.slice(1);
   },
 };
