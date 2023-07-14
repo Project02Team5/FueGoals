@@ -14,21 +14,49 @@
   {
     "name": "Lernantino",
     "email": "lernantino@gmail.com",
-    "password": "password12345"
+    "password": "password12345",
+    "activity_interval": 30,
+    "cardio_frequency": 8,
+    "strength_frequency": 4,
+    "flexibility_frequency": 4,
+    "cardio_duration": 30,
+    "strength_duration": 20,
+    "flexibility_duration": 20
   },
   {
     "name": "Amiko",
     "email": "amiko2k20@aol.com",
-    "password": "password12345"
+    "password": "password12345",
+    "activity_interval": 30,
+    "cardio_frequency": 8,
+    "strength_frequency": 4,
+    "flexibility_frequency": 4,
+    "cardio_duration": 30,
+    "strength_duration": 20,
+    "flexibility_duration": 20
   },
   {
     "name": "Jordan",
     "email": "jordan99@msn.com",
-    "password": "password12345"
+    "password": "password12345",
+    "activity_interval": 30,
+    "cardio_frequency": 8,
+    "strength_frequency": 4,
+    "flexibility_frequency": 4,
+    "cardio_duration": 30,
+    "strength_duration": 20,
+    "flexibility_duration": 20
   },
   {
     "name": "Blake",
     "email": "the_blake@yahoo.com",
-    "password": "password12345"
+    "password": "password12345",
+    "activity_interval": 30,
+    "cardio_frequency": 8,
+    "strength_frequency": 4,
+    "flexibility_frequency": 4,
+    "cardio_duration": 30,
+    "strength_duration": 20,
+    "flexibility_duration": 20
   }
 ]
