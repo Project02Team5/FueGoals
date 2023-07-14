@@ -1,10 +1,20 @@
-const router = require('express').Router();
-const { User, Activity } = require('../models');
-const withAuth = require('../utils/auth');
-const { Op } = require('sequelize');
+const router = require("express").Router();
+const { User, Activity } = require("../models");
+const withAuth = require("../utils/auth");
+const { Op } = require("sequelize");
+
+const intervalDate = (interval) => {
+  var date = new Date();
+  var formatDate =  date.setDate(date.getDate() - interval);
+  return formatDate;
+};
 
 // Prevent non logged in users from viewing the homepage
-router.get('/', async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
+
+  const interval = req.query.interval || 30
+  // http://localhost:3001/?interval=1
+
   try {
     const userData = await Activity.findAll({
       include: {
@@ -12,12 +22,15 @@ router.get('/', async (req, res) => {
         attributes: ["activity_interval"],
       },
       where: {
-      [Op.and]: [
-        {user_id: 4},
-        {createdAt: {
-          [Op.lt]: Date()}},
-      ],
-      }
+        [Op.and]: [
+          { user_id: 4 },
+          {
+            createdAt: {
+              [Op.gt]: intervalDate(interval),
+            },
+          },
+        ],
+      },
     });
 
     const users = userData.map((project) => project.get({ plain: true }));
@@ -29,20 +42,20 @@ router.get('/', async (req, res) => {
       user_name: req.session.user_name,
       user_id: req.session.user_id,
     });
-    // res.send(users)
+    // res.send(users);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.get('/login', (req, res) => {
+router.get("/login", (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect("/");
     return;
   }
 
-  res.render('login');
+  res.render("login");
 });
 
 module.exports = router;
