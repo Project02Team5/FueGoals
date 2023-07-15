@@ -4,13 +4,73 @@
 {{!-- Left side of the body for text --}}
 {{#if logged_in}}
 <div class="bodyViewL">
-   This is where user stats for exercise category types
    {{!-- this is for user stats --}}
+   {{#each activities as |activity|}}
+   <h2>Stats for {{user.name}}:</h2></n>
+   {{#if cardioCount}}
+   <p class="statlabels">Total cardio workouts completed: {{cardioCount}}</p>
+   {{else}}
+   {{/if}}
+   {{#if strengthCount}}
+   <p class="statlabels">Total strengh workouts completed: {{strengthCount}}</p>
+   {{else}}
+   {{/if}}
+   {{#if flexibilityCount}}
+   <p class="statlabels">Total flexibility activities completed: {{flexibilityCount}}</p>
+   {{else}}
+   {{/if}}
+   {{#if cardioDuration}}
+   <p class="statlabels">Total cardio completed: {{cardioDuration}} mins</p>
+   {{else}}
+   {{/if}}
+   {{#if strengthDuration}}
+   <p class="statlabels">Total time spent on strength workouts: {{strengthDuration}} mins</p>
+   {{else}}
+   {{/if}}
+   {{#if flexibilityDuration}}
+   <p class="statlabels">Total time spent on flexibility activities: {{flexibilityDuration}} mins</p>
+   {{else}}
+   {{/if}}
+   {{#if poundsLifted}}
+    <p class="statlabels">Total weight lifted: {{poundsLifted}} lbs</p>
+   {{else}}
+   {{/if}}
+   {{/each}}
 </div>
 {{else}}
 <div class="bodyViewL">
    {{!-- this is for all users stats --}}
-   this is where every user's stats go for each selected
+   {{#each activities as |activity|}}
+   <h2>Stats from our users:</h2></n>
+   {{#if cardioCount}}
+   <p class="statlabels">Total cardio workouts completed: {{cardioCount}}</p>
+   {{else}}
+   {{/if}}
+   {{#if strengthCount}}
+   <p class="statlabels">Total strengh workouts completed: {{strengthCount}}</p>
+   {{else}}
+   {{/if}}
+   {{#if flexibilityCount}}
+   <p class="statlabels">Total flexibility activities completed: {{flexibilityCount}}</p>
+   {{else}}
+   {{/if}}
+   {{#if cardioDuration}}
+   <p class="statlabels">Total cardio completed: {{cardioDuration}} mins</p>
+   {{else}}
+   {{/if}}
+   {{#if strengthDuration}}
+   <p class="statlabels">Total time spent on strength workouts: {{strengthDuration}} mins</p>
+   {{else}}
+   {{/if}}
+   {{#if flexibilityDuration}}
+   <p class="statlabels">Total time spent on flexibility activities: {{flexibilityDuration}} mins</p>
+   {{else}}
+   {{/if}}
+   {{#if poundsLifted}}
+    <p class="statlabels">Total weight lifted: {{poundsLifted}} lbs</p>
+   {{else}}
+   {{/if}}
+   {{/each}}
 </div>
 {{/if}}
 
