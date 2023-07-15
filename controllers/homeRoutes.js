@@ -1,7 +1,9 @@
+require("dotenv").config();
 const router = require("express").Router();
 const { User, Activity } = require("../models");
 const withAuth = require("../utils/auth");
 const { Sequelize, Op } = require("sequelize");
+const request = require("request");
 
 const intervalDate = (interval) => {
   var date = new Date();
@@ -19,37 +21,53 @@ router.get("/", async (req, res) => {
         limit: 1,
         attributes: [
           [
-            Sequelize.literal('(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'),
+            Sequelize.literal(
+              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'
+            ),
             "cardioCount",
           ],
           [
-            Sequelize.literal('(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "strength")'),
+            Sequelize.literal(
+              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+            ),
             "strengthCount",
           ],
           [
-            Sequelize.literal('(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'),
+            Sequelize.literal(
+              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+            ),
             "flexibilityCount",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'
+            ),
             "cardioDuration",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "strength")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+            ),
             "strengthDuration",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+            ),
             "flexibilityDuration",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_sets) * SUM(strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_sets) * SUM(strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+            ),
             "poundsLifted",
           ],
         ],
       });
- 
-      const activities = activityData.map((activity) => activity.get({ plain: true }));
+
+      const activities = activityData.map((activity) =>
+        activity.get({ plain: true })
+      );
       res.render("homepage", {
         activities,
         logged_in: req.session.logged_in,
@@ -64,31 +82,45 @@ router.get("/", async (req, res) => {
         limit: 1,
         attributes: [
           [
-            Sequelize.literal('(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'),
+            Sequelize.literal(
+              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'
+            ),
             "cardioCount",
           ],
           [
-            Sequelize.literal('(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "strength")'),
+            Sequelize.literal(
+              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+            ),
             "strengthCount",
           ],
           [
-            Sequelize.literal('(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'),
+            Sequelize.literal(
+              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+            ),
             "flexibilityCount",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'
+            ),
             "cardioDuration",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "strength")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+            ),
             "strengthDuration",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+            ),
             "flexibilityDuration",
           ],
           [
-            Sequelize.literal('(SELECT SUM(activity_sets) * SUM(strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'),
+            Sequelize.literal(
+              '(SELECT SUM(activity_sets) * SUM(strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+            ),
             "poundsLifted",
           ],
         ],
@@ -98,7 +130,7 @@ router.get("/", async (req, res) => {
         },
         where: {
           [Op.and]: [
-            { user_id: 4 },
+            { user_id: req.session.user_id },
             {
               createdAt: {
                 [Op.gt]: intervalDate(interval),
@@ -108,13 +140,13 @@ router.get("/", async (req, res) => {
         },
       });
 
-      const activities = activityData.map((activity) => activity.get({ plain: true }));
+      const activities = activityData.map((activity) =>
+        activity.get({ plain: true })
+      );
 
       res.render("homepage", {
         activities,
         logged_in: req.session.logged_in,
-        user_name: req.session.user_name,
-        user_id: req.session.user_id,
       });
       // res.send(activities);
     } catch (err) {
@@ -150,6 +182,84 @@ router.get("/dashboard", async (req, res) => {
     });
   } catch (err) {
     res.status(400).json(err);
+  }
+});
+
+// arrays for query parameters
+const exerciseTypes = [
+  "cardio",
+  "olympic_weightlifting",
+  "plyometrics",
+  "powerlifting",
+  "strength",
+  "stretching",
+  "strongman",
+];
+
+const muscleTypes = [
+  "abdominals",
+  "abductors",
+  "adductors",
+  "biceps",
+  "calves",
+  "chest",
+  "forearms",
+  "glutes",
+  "hamstrings",
+  "lats",
+  "lower_back",
+  "middle_back",
+  "neck",
+  "quadriceps",
+  "traps",
+  "triceps",
+];
+
+const difficultyTypes = ["beginner", "intermediate", "expert"];
+
+// get request for /exercises route. GETs exercise api data based on user input
+router.post("/exercises", async (req, res) => {
+  try {
+    // available varialbes
+    var muscle = req.body.muscle;
+    var difficulty = req.body.difficulty;
+    var type = req.body.type;
+    var offset = "";
+
+    const exerciseData = await request.get(
+      {
+        url:
+          "https://api.api-ninjas.com/v1/exercises?muscle=" +
+          muscle +
+          "&difficulty=" +
+          difficulty +
+          "&type=" +
+          type +
+          "&offset=" +
+          offset,
+        headers: {
+          "X-Api-Key": process.env.API_KEY,
+        },
+      },
+      function (error, response, body) {
+        if (error) return console.error("Request failed:", error);
+        else if (response.statusCode != 200)
+          return console.error(
+            "Error:",
+            response.statusCode,
+            body.toString("utf8")
+          );
+        else {
+          exercises = JSON.stringify(body);
+          // res.render("homepage", {
+          //   exercises,
+          // });
+          res.send(exercises);
+        }
+      }
+    );
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
