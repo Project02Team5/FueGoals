@@ -3,8 +3,15 @@
    Hello! {{users.name}}!
 </div>
 {{!-- previous workouts completed stats --}}
-<div>
-    {{users.id}}
-</div>
+
+
+{{#each users.activities as |activity|}}
+ <div class="card">
+
+    <header>Type: {{cap activity.activity_type}}</header>
+    <header>Activity: {{activity.activity_performed}}</header>
+ </div>
+
+{{/each}}
 {{!-- user uploaded image progress tracker/gallery --}}
 {{!-- favorite workouts / go to exercises from which exercises that the user chooses the most --}}
