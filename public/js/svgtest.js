@@ -13,56 +13,189 @@ const getRefresh = async () => {
   }).then(document.location.reload());
 };
 
-
-
-
-const initAPI = fetch("/exercises", {
-  method: "POST",
-  body: JSON.stringify({
-    muscle: '',
-    difficulty: '',
-    type: 'cardio',
-  }),
-  headers: { "Content-Type": "application/json" },
-}).then((response) => {
-  return response.json();
-});
-
-
-const getExercises = () => {
-   initAPI.then((e) => {
-    const recExercises = JSON.parse(e);
-    const exercises = []
-    for (let i=0; i < recExercises.length; i++) {
-        exercises.push(`<p id='eo${[i]}' class='exercise-options'>`+recExercises[i].name+"</p>"+"</br>");
+// save workouts to database
+const saveWorkouts = () => {
+  var exChecks = document.querySelectorAll(
+    '.bodyViewR input[type="checkbox"]:checked'
+  );
+  var selectedExs = [];
+  var newActivity = {};
+  for (let i = 0; i < exChecks.length; i++) {
+    newActivity = {
+      activity_type: exChecks[i].value,
+      activity_performed: exChecks[i].id,
+      workout_completed: false,
+    };
+    const createExercise = fetch("/", {
+      method: "POST",
+      body: JSON.stringify(newActivity),
+      headers: { "Content-Type": "application/json" },
+    });
+    selectedExs.push(newActivity);
+  }
+  console.log(selectedExs);
+  const initPending = fetch("/exercises", {
+    method: "GET",
+  }).then((response) => {
+    return response.json();
+  });
+  initPending.then((e) => {
+    const recPending = e;
+    const pending = [];
+    for (let i = 0; i < recPending.length; i++) {
+      pending.push(
+        `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
+          recPending[i].activity_performed +
+          "</label></br>"
+      );
     }
-    console.log(exercises);
-    leftEl.innerHTML = exercises.join(' ');
+    leftEl.innerHTML =
+      "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" +
+      pending.join(" ");
+  });
+  getExercises();
+};
+
+// save workouts to database
+const updateWorkouts = () => {
+  var exChecks = document.querySelectorAll(
+    '.bodyViewL input[type="checkbox"]:checked'
+  );
+  var updateActivity = {};
+  for (let i = 0; i < exChecks.length; i++) {
+    if (!document.getElementById(`lbs${exChecks[i].id}`)) {
+      var lbs = null
+    } else {
+      var lbs = document.getElementById(`lbs${exChecks[i].id}`).value;
+    }
+    updateActivity = {
+      id: exChecks[i].id,
+      activity_duration: document.getElementById(`dur${exChecks[i].id}`).value,
+      activity_sets: document.getElementById(`sets${exChecks[i].id}`).value,
+      strength_weight: lbs
+    };
+    const updateExercise = fetch("/exercises", {
+      method: "PUT",
+      body: JSON.stringify(updateActivity),
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  // retrieve pending
+  const initPending = fetch("/exercises", {
+    method: "GET",
+  }).then((response) => {
+    return response.json();
+  });
+  initPending.then((e) => {
+    const recPending = e;
+    const pending = [];
+    for (let i = 0; i < recPending.length; i++) {
+      if (recPending[i].activity_type != 'cardio' && recPending[i].activity_type != 'stretching' ) {
+        var weightInput = `<input id='lbs${recPending[i].id}' class='pending-inputs' type='text' name='lbs' placeholder='total lbs lifted'></br>`
+      } else {
+        var weightInput = ''
+      };
+      pending.push(
+        `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
+          recPending[i].activity_performed +
+          `</label><input id='dur${recPending[i].id}' class='pending-inputs' type='text' name='dur' placeholder='workout time in mins'></br><input id='sets${recPending[i].id}' class='pending-inputs' type='text' name='sets' placeholder='# of sets performed'></br>${weightInput}`
+      );
+    }
+    leftEl.innerHTML =
+      "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" +
+      pending.join(" ");
+  });
+  getExercises();
+};
+
+// get a list of exercise options to select and a list of pending exercises for user (if any exist)
+const getExercises = (m, t) => {
+  // retrieve options
+  if (!m && !t) {
+    rightEl.innerHTML =
+      "<h3 id='exercisechoices'>Workout Choices</h3></br><p>Click a body part to display options</p>";
+  } else {
+    const initAPI = fetch("/exercises", {
+      method: "POST",
+      body: JSON.stringify({
+        muscle: m,
+        difficulty: "",
+        type: t,
+      }),
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => {
+      return response.json();
+    });
+    initAPI.then((e) => {
+      const recExercises = JSON.parse(e);
+      const exercises = [];
+      for (let i = 0; i < recExercises.length; i++) {
+        exercises.push(
+          `<input type='checkbox' id='${recExercises[i].name}' value='${
+            recExercises[i].type
+          }' class='exercise-options' name='exChoices' unchecked><label id='lblfor${[
+            i,
+          ]}' for='${recExercises[i].name}'>` +
+            recExercises[i].name +
+            "</label></br>"
+        );
+      }
+      rightEl.innerHTML =
+        "<h3 id='exercisechoices'>Workout Choices</h3></br><button id='btnsaveworkouts' onClick='saveWorkouts()'>Save Workouts</button></br>" +
+        exercises.join(" ");
+    });
+  }
+  // retrieve pending
+  const initPending = fetch("/exercises", {
+    method: "GET",
+  }).then((response) => {
+    return response.json();
+  });
+  initPending.then((e) => {
+    const recPending = e;
+    const pending = [];
+    for (let i = 0; i < recPending.length; i++) {
+      if (recPending[i].activity_type != 'cardio' && recPending[i].activity_type != 'stretching' ) {
+        var weightInput = `<input id='lbs${recPending[i].id}' class='pending-inputs' type='text' name='lbs' placeholder='total lbs lifted'></br>`
+      } else {
+        var weightInput = ''
+      };
+      pending.push(
+        `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
+          recPending[i].activity_performed +
+          `</label><input id='dur${recPending[i].id}' class='pending-inputs' type='text' name='dur' placeholder='workout time in mins'></br><input id='sets${recPending[i].id}' class='pending-inputs' type='text' name='sets' placeholder='# of sets performed'></br>${weightInput}`
+      );
+    }
+    leftEl.innerHTML =
+      "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" +
+      pending.join(" ");
   });
 };
 
 function bodyPartSelector(event) {
-  //   console.log(event.target.id);
-  //   stats can be added here eventually
-  if (event.target.id === "head") {
-    getExercises();
-  } else if (event.target.id === "upperBody") {
-    leftEl.textContent = "Upper Body";
-  } else if (event.target.id === "legs") {
-    leftEl.textContent = "Legs";
-  } else if (event.target.id === "core") {
-    leftEl.textContent = "Core";
-  }
-
-  //   can use this to generate exercises on the right *modals for when you choose the exercise give it the correct params? maybe the params can be set by type as cardio usually is duration and other exercises are reps based.
-  if (event.target.id === "head") {
-    rightEl.textContent = "Running";
-  } else if (event.target.id === "upperBody") {
-    rightEl.textContent = "Bench Press";
-  } else if (event.target.id === "legs") {
-    rightEl.textContent = "Squats";
-  } else if (event.target.id === "core") {
-    rightEl.textContent = "Sit Ups";
+  if (!
+    typeof document.getElementById("logout.btn") != undefined &&
+    !document.getElementById("logout.btn") != null
+  ) {
+    if (event.target.id === "head") {
+      getExercises("", "cardio");
+    } else if (event.target.id === "upperBody") {
+      getExercises("biceps", "strength");
+    } else if (event.target.id === "legs") {
+      getExercises("glutes", "strength");
+    } else if (event.target.id === "core") {
+      getExercises("abdominals", "strength");
+    }
+  } else {
+    if (event.target.id === "head") {
+      leftEl.textContent = "Login to choose workouts!";
+    } else if (event.target.id === "upperBody") {
+      leftEl.textContent = "Login to choose workouts!";
+    } else if (event.target.id === "legs") {
+      leftEl.textContent = "Login to choose workouts!";
+    } else if (event.target.id === "core") {
+      leftEl.textContent = "Login to choose workouts!";
+    }
   }
 }
 
