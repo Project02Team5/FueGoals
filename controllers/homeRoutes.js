@@ -5,6 +5,7 @@ const withAuth = require("../utils/auth");
 const { Sequelize, Op } = require("sequelize");
 const request = require("request");
 
+// sets time period as user defined interval deducted from today
 const intervalDate = (interval) => {
   var date = new Date();
   var formatDate = date.setDate(date.getDate() - interval);
@@ -155,8 +156,8 @@ router.get("/", async (req, res) => {
   }
 });
 
+// If a session exists, redirect the request to the homepage
 router.get("/login", (req, res) => {
-  // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
     res.redirect("/");
     return;
@@ -258,6 +259,39 @@ router.post("/exercises", async (req, res) => {
         }
       }
     );
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// creates new activity from selections
+router.post("/", async (req, res) => {
+  try {
+    const newActivity = await Activity.create({
+      activity_type: req.body.activity_type,
+      activity_performed: req.body.activity_performed,
+      workout_completed: req.body.workout_completed,
+      user_id: 4,
+    });
+    // res.redirect("/");
+    res.send({ message: "Activity Created" });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.get("/exercises", async (req, res) => {
+  try {
+    const activityData = await Activity.findAll({
+      where: {
+        workout_completed: false,
+        user_id: 4
+      },
+    });
+    const activities = activityData.map((activity) =>
+      activity.get({ plain: true })
+    );
+    res.send(activities);
   } catch (err) {
     res.status(500).json(err);
   }
