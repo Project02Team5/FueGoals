@@ -271,7 +271,7 @@ router.post("/", async (req, res) => {
       activity_type: req.body.activity_type,
       activity_performed: req.body.activity_performed,
       workout_completed: req.body.workout_completed,
-      user_id: 4,
+      user_id: req.session.user_id,
     });
     // res.redirect("/");
     res.send({ message: "Activity Created" });
@@ -286,7 +286,7 @@ router.get("/exercises", async (req, res) => {
     const activityData = await Activity.findAll({
       where: {
         workout_completed: false,
-        user_id: 4
+        user_id: req.session.user_id,
       },
     });
     const activities = activityData.map((activity) =>
@@ -302,13 +302,18 @@ router.get("/exercises", async (req, res) => {
 router.put("/exercises", async (req, res) => {
   try {
     const updateActivity = await Activity.update(
-      { workout_completed: true},
+      {
+        workout_completed: true,
+        activity_duration: req.body.activity_duration,
+        activity_sets: req.body.activity_sets,
+        strength_weight: req.body.strength_weight,
+      },
       { where: { id: req.body.id } }
     );
-    res.send({ message: "Activity Updated"});
+    res.send({ message: "Activity Updated" });
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
 
 module.exports = router;
