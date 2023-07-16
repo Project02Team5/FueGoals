@@ -280,6 +280,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// retrieve pending workouts for user
 router.get("/exercises", async (req, res) => {
   try {
     const activityData = await Activity.findAll({
@@ -296,5 +297,18 @@ router.get("/exercises", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// update completed workouts
+router.put("/exercises", async (req, res) => {
+  try {
+    const updateActivity = await Activity.update(
+      { workout_completed: true},
+      { where: { id: req.body.id } }
+    );
+    res.send({ message: "Activity Updated"});
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 module.exports = router;

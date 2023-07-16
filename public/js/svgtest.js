@@ -15,11 +15,10 @@ const getRefresh = async () => {
 
 // save workouts to database
 const saveWorkouts = () => {
-  var exChecks = document.getElementsByName('exChoices');
+  var exChecks = document.querySelectorAll('.bodyViewR input[type="checkbox"]:checked');
   var selectedExs = [];
   var newActivity = {};
   for (let i = 0; i < exChecks.length; i++) {
-    if (exChecks[i].checked = true) {
       newActivity = {
         activity_type: exChecks[i].value,
         activity_performed: exChecks[i].id,
@@ -31,9 +30,51 @@ const saveWorkouts = () => {
         headers: {"Content-Type": "application/json"},
       });
       selectedExs.push(newActivity);
-    };
   };
   console.log(selectedExs);
+  const initPending = fetch("/exercises", {
+    method: "GET",
+  }).then((response) => {
+    return response.json();
+  });
+  initPending.then((e) => {
+    const recPending = e;
+    const pending = []
+    for (let i=0; i < recPending.length; i++) {
+        pending.push(`<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>`+recPending[i].activity_performed+"</label></br>");
+    }
+  leftEl.innerHTML = "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" + pending.join(' ');
+  });
+  getExercises();
+};
+
+// save workouts to database
+const updateWorkouts = () => {
+  var exChecks = document.querySelectorAll('.bodyViewL input[type="checkbox"]:checked');
+  var updateActivity = {};
+  for (let i = 0; i < exChecks.length; i++) {
+      updateActivity = {
+        id: exChecks[i].id
+      };
+      const updateExercise = fetch("/exercises", {
+        method: "PUT",
+        body: JSON.stringify(updateActivity),
+        headers: {"Content-Type": "application/json"},
+      });
+  };
+  const initPending = fetch("/exercises", {
+    method: "GET",
+  }).then((response) => {
+    return response.json();
+  });
+  initPending.then((e) => {
+    const recPending = e;
+    const pending = []
+    for (let i=0; i < recPending.length; i++) {
+        pending.push(`<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>`+recPending[i].activity_performed+"</label></br>");
+    }
+  leftEl.innerHTML = "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" + pending.join(' ');
+  });
   getExercises();
 };
 
@@ -48,7 +89,8 @@ const getExercises = (m, t) => {
       type: t,
     }),
     headers: { "Content-Type": "application/json" },
-  }).then((response) => {
+  })
+  .then((response) => {
     return response.json();
   });
    initAPI.then((e) => {
