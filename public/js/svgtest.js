@@ -6,15 +6,8 @@ var coreEl = document.querySelector("#core");
 var rightEl = document.querySelector(".bodyViewR");
 var leftEl = document.querySelector(".bodyViewL");
 
-// function to retrieve exercise options from API
-const getRefresh = async () => {
-  const response = await fetch("/", {
-    method: "GET",
-  }).then(document.location.reload());
-};
-
 // save workouts to database
-const saveWorkouts = () => {
+const saveWorkouts = async () => {
   var exChecks = document.querySelectorAll(
     '.bodyViewR input[type="checkbox"]:checked'
   );
@@ -26,45 +19,25 @@ const saveWorkouts = () => {
       activity_performed: exChecks[i].id,
       workout_completed: false,
     };
-    const createExercise = fetch("/", {
+    const createExercise = await fetch("/", {
       method: "POST",
       body: JSON.stringify(newActivity),
       headers: { "Content-Type": "application/json" },
     });
     selectedExs.push(newActivity);
   }
-  console.log(selectedExs);
-  const initPending = fetch("/exercises", {
-    method: "GET",
-  }).then((response) => {
-    return response.json();
-  });
-  initPending.then((e) => {
-    const recPending = e;
-    const pending = [];
-    for (let i = 0; i < recPending.length; i++) {
-      pending.push(
-        `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
-          recPending[i].activity_performed +
-          "</label></br>"
-      );
-    }
-    leftEl.innerHTML =
-      "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" +
-      pending.join(" ");
-  });
-  getExercises();
+  await getExercises();
 };
 
-// save workouts to database
-const updateWorkouts = () => {
+// update workouts in database
+const updateWorkouts = async () => {
   var exChecks = document.querySelectorAll(
     '.bodyViewL input[type="checkbox"]:checked'
   );
   var updateActivity = {};
   for (let i = 0; i < exChecks.length; i++) {
     if (!document.getElementById(`lbs${exChecks[i].id}`)) {
-      var lbs = null
+      var lbs = null;
     } else {
       var lbs = document.getElementById(`lbs${exChecks[i].id}`).value;
     }
@@ -72,40 +45,15 @@ const updateWorkouts = () => {
       id: exChecks[i].id,
       activity_duration: document.getElementById(`dur${exChecks[i].id}`).value,
       activity_sets: document.getElementById(`sets${exChecks[i].id}`).value,
-      strength_weight: lbs
+      strength_weight: lbs,
     };
-    const updateExercise = fetch("/exercises", {
+    const updateExercise = await fetch("/exercises", {
       method: "PUT",
       body: JSON.stringify(updateActivity),
       headers: { "Content-Type": "application/json" },
     });
   }
-  // retrieve pending
-  const initPending = fetch("/exercises", {
-    method: "GET",
-  }).then((response) => {
-    return response.json();
-  });
-  initPending.then((e) => {
-    const recPending = e;
-    const pending = [];
-    for (let i = 0; i < recPending.length; i++) {
-      if (recPending[i].activity_type != 'cardio' && recPending[i].activity_type != 'stretching' ) {
-        var weightInput = `<input id='lbs${recPending[i].id}' class='pending-inputs' type='text' name='lbs' placeholder='total lbs lifted'></br>`
-      } else {
-        var weightInput = ''
-      };
-      pending.push(
-        `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
-          recPending[i].activity_performed +
-          `</label><input id='dur${recPending[i].id}' class='pending-inputs' type='text' name='dur' placeholder='workout time in mins'></br><input id='sets${recPending[i].id}' class='pending-inputs' type='text' name='sets' placeholder='# of sets performed'></br>${weightInput}`
-      );
-    }
-    leftEl.innerHTML =
-      "<h3 id='pendingworkouts'>Pending Workouts</h3></br><button id='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" +
-      pending.join(" ");
-  });
-  getExercises();
+  await getExercises();
 };
 
 // get a list of exercise options to select and a list of pending exercises for user (if any exist)
@@ -155,11 +103,14 @@ const getExercises = (m, t) => {
     const recPending = e;
     const pending = [];
     for (let i = 0; i < recPending.length; i++) {
-      if (recPending[i].activity_type != 'cardio' && recPending[i].activity_type != 'stretching' ) {
-        var weightInput = `<input id='lbs${recPending[i].id}' class='pending-inputs' type='text' name='lbs' placeholder='total lbs lifted'></br>`
+      if (
+        recPending[i].activity_type != "cardio" &&
+        recPending[i].activity_type != "stretching"
+      ) {
+        var weightInput = `<input id='lbs${recPending[i].id}' class='pending-inputs' type='text' name='lbs' placeholder='total lbs lifted'></br>`;
       } else {
-        var weightInput = ''
-      };
+        var weightInput = "";
+      }
       pending.push(
         `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
           recPending[i].activity_performed +
@@ -173,10 +124,8 @@ const getExercises = (m, t) => {
 };
 
 function bodyPartSelector(event) {
-  if (!
-    typeof document.getElementById("logout.btn") != undefined &&
-    !document.getElementById("logout.btn") != null
-  ) {
+  const logoutCheck = document.getElementById("logout");
+  if (typeof logoutCheck != "undefined" && logoutCheck != null) {
     if (event.target.id === "head") {
       getExercises("", "cardio");
     } else if (event.target.id === "upperBody") {
