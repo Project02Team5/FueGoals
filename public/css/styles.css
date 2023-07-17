@@ -1,0 +1,40 @@
+/* various page styling */
+/* title */
+#pagetitle a {
+    color: orangered;
+    text-shadow: 0 0 2px red;
+    text-decoration: none;
+}
+
+header a {
+    text-decoration: none;
+}
+
+/* nav */
+#logout {
+    background-color: rgb(227, 61, 61);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+}
+
+
+/* workout lists on either side of svg */
+.workout-headers {
+    color: orangered;
+    font-size: 5vh;
+    text-decoration: underline 2px orange;
+}
+
+.btnsaveworkouts {
+    background-color: rgb(87, 176, 87);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-color: rgb(87, 176, 87);
+    border-radius: 5%;
+    box-shadow: none;
+    width: auto;
+}
