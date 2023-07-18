@@ -168,17 +168,23 @@ router.get("/login", (req, res) => {
 
 router.get("/dashboard", async (req, res) => {
   try {
-    const userData = await User.findByPk(req.session.user_id, {
-      include: { model: Activity },
+    const activityData = await Activity.findAll({
+      include: {
+        model: User,
+        attributes: ["activity_interval", "name"],
+      },
+      where: {
+        workout_completed: true,
+        user_id: req.session.user_id,
+      },
     });
-
-    let users = [];
-    if (userData) {
-      users = userData.get({ plain: true });
-    }
+  
+    const activities = activityData.map((activity) =>
+      activity.get({ plain: true })
+    );
 
     res.render("dashboard", {
-      users,
+      activities,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

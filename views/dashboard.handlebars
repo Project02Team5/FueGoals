@@ -1,15 +1,16 @@
 {{!-- user information will be here --}}
 <div>
-   Hello! {{users.name}}!
+   {{#each activities.user as |user|}}
+   Hello! {{user.name}}!
+   {{/each}}
 </div>
 {{!-- previous workouts completed stats --}}
 
 
-{{#each users.activities as |activity|}}
+{{#each activities as |activity|}}
  <div class="card">
-
-    <header>Type: {{cap activity.activity_type}}</header>
-    <header>Activity: {{activity.activity_performed}}</header>
+    <p>Type: {{cap activity_type}}</p>
+    <p>Activity: {{activity_performed}}</p>
  </div>
 
 {{/each}}
