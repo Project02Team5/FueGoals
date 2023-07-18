@@ -4,6 +4,43 @@ const { User, Activity } = require("../models");
 const withAuth = require("../utils/auth");
 const { Sequelize, Op } = require("sequelize");
 const request = require("request");
+const multer = require('multer');
+const { s3Uploadv2 } = require('../s3Service');
+
+// multer-aws
+const storage = multer.memoryStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    const { originalname, fieldname } = file;
+    cb(null, `${fieldname}-${originalname}`)
+  },
+});
+
+// filters file type by images
+const fileFilter = (req, file, cb) => {
+  console.log(file.mimetype);
+  if (file.mimetype.split("/")[0] === 'image') {
+    cb(null, true)
+  } else {
+    cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
+  }
+};
+
+// limits at 5mb per image
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5000000 }
+});
+
+// multiple images by fields posts
+// const multiUpload = upload.fields([
+//   { name: "profile" },
+//   { name: "progress" },
+// ]);
+
 
 // sets time period as user defined interval deducted from today
 const intervalDate = (interval) => {
@@ -316,14 +353,45 @@ router.put("/exercises", async (req, res) => {
   }
 });
 
-// to upload files
-router.post("/upload", multiUpload, async (req, res) => {
+// to upload images
+router.post("/upload", 
+// multiUpload,
+ async (req, res) => {
   try {
     console.log(req.files);
     const result = await s3Uploadv2(req.files);
-    res.json({ status: "successfully uploaded", result });
-    const userData = await User.findByPk(req.session.user_id, {});
-    
+    const userImage = await User.update(
+      {
+        display_image: result.Location
+      },
+      {
+        where: {
+          user_id: req.session.user_id
+        }
+      },
+      );
+      res.json({ status: "successfully uploaded", result });
+
+  } catch (err) {
+    console.log('not hello world');
+    res.status(500).json(err);
+  }
+});
+
+// multer error handler
+router.use((error, req, res, next) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({
+        message: "File size is too large"
+      });
+    }
+
+    if (error.code === "LIMIT_UNEXPECTED_FILE") {
+      return res.status(400).json({
+        message: "FIle must be an image!"
+      });
+    }
   }
 });
 
