@@ -1,3 +1,4 @@
+/* svg stylings */
 path#upperBody {
     opacity: 0;
 }
@@ -5,6 +6,7 @@ path#upperBody {
 path#upperBody:hover {
     fill: black;
     opacity: 1;
+    cursor: pointer;
 }
 
 path#head {
@@ -14,6 +16,7 @@ path#head {
 path#head:hover {
     fill: red;
     opacity: 1;
+    cursor: pointer;
 }
 
 path#legs {
@@ -23,6 +26,7 @@ path#legs {
 path#legs:hover {
     fill: yellow;
     opacity: 1;
+    cursor: pointer;
 }
 
 path#core {
@@ -32,6 +36,7 @@ path#core {
 path#core:hover {
     opacity: 1;
     fill: orange;
+    cursor: pointer;
 }
 
 div#bodyDiagram {
