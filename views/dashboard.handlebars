@@ -8,7 +8,12 @@
    {{/each}}
    </div>
 {{!-- previous workouts completed stats --}}
+<form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data">
+  <input type="file" id="myFile" name="filename" accept="image/*">
+  <input type="submit" value="Upload">
+</form>
 
+<img src="{{users.display_image}}" alt="User's Profile Picture" class="profilePic">
 
 {{#each activities as |activity|}}
  <div id={{id}} class="card">
@@ -26,3 +31,4 @@
 <script src="/js/dashboard.js"></script>
 {{!-- user uploaded image progress tracker/gallery --}}
 {{!-- favorite workouts / go to exercises from which exercises that the user chooses the most --}}
+<script src="/js/imageUpload.js"></script>
