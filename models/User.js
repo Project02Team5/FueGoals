@@ -63,6 +63,10 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    display_image: {
+      type: DataTypes.BLOB,
+      allowNull: true,
+    },
   },
   {
     hooks: {

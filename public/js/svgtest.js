@@ -6,6 +6,17 @@ var coreEl = document.querySelector("#core");
 var rightEl = document.querySelector(".bodyViewR");
 var leftEl = document.querySelector(".bodyViewL");
 
+// delete workout
+const deleteWorkout = async (id) => {
+  // console.log(id);
+  const deleteExercise = await fetch("/exercises", {
+    method: "DELETE",
+    body: JSON.stringify( {id: id} ),
+    headers: { "Content-Type": "application/json" },
+  });
+  await getExercises();
+};
+
 // save workouts to database
 const saveWorkouts = async () => {
   var exChecks = document.querySelectorAll(
@@ -79,13 +90,15 @@ const getExercises = (m, t) => {
       const exercises = [];
       for (let i = 0; i < recExercises.length; i++) {
         exercises.push(
-          `<input type='checkbox' id='${recExercises[i].name}' value='${
+          `<div class='choice-containers'><input type='checkbox' id='${
+            recExercises[i].name
+          }' value='${
             recExercises[i].type
           }' class='exercise-options' name='exChoices' unchecked><label id='lblfor${[
             i,
           ]}' for='${recExercises[i].name}'>` +
             recExercises[i].name +
-            "</label></br>"
+            "</label></br></div>"
         );
       }
       rightEl.innerHTML =
@@ -112,9 +125,9 @@ const getExercises = (m, t) => {
         var weightInput = "";
       }
       pending.push(
-        `<input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
+        `<div class='pending-containers'><input type='checkbox' id='${recPending[i].id}' class='pending-exercises' name='exPending' unchecked><label id='lblfor${recPending[i].id}' for='${recPending[i].id}'>` +
           recPending[i].activity_performed +
-          `</label><input id='dur${recPending[i].id}' class='pending-inputs' type='text' name='dur' placeholder='workout time in mins'></br><input id='sets${recPending[i].id}' class='pending-inputs' type='text' name='sets' placeholder='# of sets performed'></br>${weightInput}`
+          `</label><button class='delete-pending' onClick='deleteWorkout(${recPending[i].id})'>X</button><input id='dur${recPending[i].id}' class='pending-inputs' type='text' name='dur' placeholder='workout time in mins'></br><input id='sets${recPending[i].id}' class='pending-inputs' type='text' name='sets' placeholder='# of sets performed'></br>${weightInput}</div>`
       );
     }
     leftEl.innerHTML =

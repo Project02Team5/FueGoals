@@ -203,23 +203,55 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", withAuth, async (req, res) => {
   try {
-    const userData = await User.findByPk(req.session.user_id, {
-      include: { model: Activity },
+    const activityData = await Activity.findAll({
+      include: {
+        model: User,
+        attributes: ["activity_interval", "name"],
+      },
+      where: {
+        workout_completed: true,
+        user_id: req.session.user_id,
+      },
     });
 
-    let users = [];
-    if (userData) {
-      users = userData.get({ plain: true });
-    }
+    const userData = await User.findAll({
+      attributes: ["name", "display_image"],
+      where: {
+        id: req.session.user_id,
+      },
+    });
+  
+    const activities = activityData.map((activity) =>
+      activity.get({ plain: true })
+    );
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
 
     res.render("dashboard", {
+      activities,
       users,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(400).json(err);
+  }
+});
+
+// update incompleted workouts (removes workout from dashboard)
+router.put("/dashboard", async (req, res) => {
+  try {
+    const updateActivity = await Activity.update(
+      {
+        workout_completed: false,
+      },
+      { where: { id: req.body.id } }
+    );
+    res.send({ message: "Activity Updated" });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
@@ -348,6 +380,18 @@ router.put("/exercises", async (req, res) => {
       { where: { id: req.body.id } }
     );
     res.send({ message: "Activity Updated" });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// update completed workouts
+router.delete("/exercises", async (req, res) => {
+  try {
+    const updateActivity = await Activity.destroy(
+      { where: { id: req.body.id } }
+    );
+    res.send({ message: "Activity Deleted" });
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,7 +1,12 @@
 {{!-- user information will be here --}}
-<div>
-   Hello! {{users.name}}!
-</div>
+{{#each users as |user|}}
+<div id="dashboardheader">
+   <h3>
+   Hello {{user.name}}!
+</h3>
+ <img id="profileimage" src={{display_image}}>
+   {{/each}}
+   </div>
 {{!-- previous workouts completed stats --}}
 <form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data">
   <input type="file" id="myFile" name="filename" accept="image/*">
@@ -10,14 +15,20 @@
 
 <img src="{{users.display_image}}" alt="User's Profile Picture" class="profilePic">
 
-{{#each users.activities as |activity|}}
- <div class="card">
-
-    <header>Type: {{cap activity.activity_type}}</header>
-    <header>Activity: {{activity.activity_performed}}</header>
+{{#each activities as |activity|}}
+ <div id={{id}} class="card">
+    <p>Type: {{cap activity_type}}</p>
+    <p>Activity: {{activity_performed}}</p>
+    <p>Activity Duration: {{activity_duration}}</p>
+    <p>Number of sets: {{activity_sets}}</p>
+    {{#if strength_weight}}
+    <p>Total lbs lifted: {{strength_weight}}</p>
+    {{/if}}
+    <button onClick="incompleteWorkout(this.parentNode.id)">Mark Workout Incomplete</button>
  </div>
-
 {{/each}}
+
+<script src="/js/dashboard.js"></script>
 {{!-- user uploaded image progress tracker/gallery --}}
 {{!-- favorite workouts / go to exercises from which exercises that the user chooses the most --}}
 <script src="/js/imageUpload.js"></script>
