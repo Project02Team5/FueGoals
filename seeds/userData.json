@@ -9,7 +9,8 @@
     "flexibility_frequency": 4,
     "cardio_duration": 30,
     "strength_duration": 20,
-    "flexibility_duration": 20
+    "flexibility_duration": 20,
+    "display_image": "https://www.bodybuilding.com/images/2019/july/best-beginner-weight-training-guide-with-easy-to-follow-workout-header-b-960x540.jpg"
   },
   {
     "name": "Lernantino",
@@ -21,7 +22,8 @@
     "flexibility_frequency": 4,
     "cardio_duration": 30,
     "strength_duration": 20,
-    "flexibility_duration": 20
+    "flexibility_duration": 20,
+    "display_image": "https://www.bodybuilding.com/images/2019/july/best-beginner-weight-training-guide-with-easy-to-follow-workout-header-b-960x540.jpg"
   },
   {
     "name": "Amiko",
@@ -33,7 +35,8 @@
     "flexibility_frequency": 4,
     "cardio_duration": 30,
     "strength_duration": 20,
-    "flexibility_duration": 20
+    "flexibility_duration": 20,
+    "display_image": "https://www.bodybuilding.com/images/2019/july/best-beginner-weight-training-guide-with-easy-to-follow-workout-header-b-960x540.jpg"
   },
   {
     "name": "Jordan",
@@ -45,7 +48,8 @@
     "flexibility_frequency": 4,
     "cardio_duration": 30,
     "strength_duration": 20,
-    "flexibility_duration": 20
+    "flexibility_duration": 20,
+    "display_image": "https://www.bodybuilding.com/images/2019/july/best-beginner-weight-training-guide-with-easy-to-follow-workout-header-b-960x540.jpg"
   },
   {
     "name": "Blake",
@@ -57,6 +61,7 @@
     "flexibility_frequency": 4,
     "cardio_duration": 30,
     "strength_duration": 20,
-    "flexibility_duration": 20
+    "flexibility_duration": 20,
+    "display_image": "https://www.bodybuilding.com/images/2019/july/best-beginner-weight-training-guide-with-easy-to-follow-workout-header-b-960x540.jpg"
   }
 ]
