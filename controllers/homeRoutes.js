@@ -192,6 +192,21 @@ router.get("/dashboard", async (req, res) => {
   }
 });
 
+// update incompleted workouts (removes workout from dashboard)
+router.put("/dashboard", async (req, res) => {
+  try {
+    const updateActivity = await Activity.update(
+      {
+        workout_completed: false,
+      },
+      { where: { id: req.body.id } }
+    );
+    res.send({ message: "Activity Updated" });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // arrays for query parameters
 const exerciseTypes = [
   "cardio",
@@ -322,6 +337,18 @@ router.put("/exercises", async (req, res) => {
   }
 });
 
+// update completed workouts
+router.delete("/exercises", async (req, res) => {
+  try {
+    const updateActivity = await Activity.destroy(
+      { where: { id: req.body.id } }
+    );
+    res.send({ message: "Activity Deleted" });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // to upload files
 router.post("/upload", multiUpload, async (req, res) => {
   try {
@@ -330,7 +357,7 @@ router.post("/upload", multiUpload, async (req, res) => {
     res.json({ status: "successfully uploaded", result });
     const userData = await User.findByPk(req.session.user_id, {});
     
-  }
+  } catch{}
 });
 
 module.exports = router;
