@@ -316,4 +316,15 @@ router.put("/exercises", async (req, res) => {
   }
 });
 
+// to upload files
+router.post("/upload", multiUpload, async (req, res) => {
+  try {
+    console.log(req.files);
+    const result = await s3Uploadv2(req.files);
+    res.json({ status: "successfully uploaded", result });
+    const userData = await User.findByPk(req.session.user_id, {});
+    
+  }
+});
+
 module.exports = router;
