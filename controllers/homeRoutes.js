@@ -166,7 +166,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", withAuth, async (req, res) => {
   try {
     const activityData = await Activity.findAll({
       include: {
@@ -178,13 +178,24 @@ router.get("/dashboard", async (req, res) => {
         user_id: req.session.user_id,
       },
     });
+
+    const userData = await User.findAll({
+      attributes: ["name", "display_image"],
+      where: {
+        id: req.session.user_id,
+      },
+    });
   
     const activities = activityData.map((activity) =>
       activity.get({ plain: true })
     );
+    const users = userData.map((user) =>
+      user.get({ plain: true })
+    );
 
     res.render("dashboard", {
       activities,
+      users,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -350,14 +361,14 @@ router.delete("/exercises", async (req, res) => {
 });
 
 // to upload files
-router.post("/upload", multiUpload, async (req, res) => {
-  try {
-    console.log(req.files);
-    const result = await s3Uploadv2(req.files);
-    res.json({ status: "successfully uploaded", result });
-    const userData = await User.findByPk(req.session.user_id, {});
+// router.post("/upload", multiUpload, async (req, res) => {
+//   try {
+//     console.log(req.files);
+//     const result = await s3Uploadv2(req.files);
+//     res.json({ status: "successfully uploaded", result });
+//     const userData = await User.findByPk(req.session.user_id, {});
     
-  } catch{}
-});
+//   } catch{}
+// });
 
 module.exports = router;

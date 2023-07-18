@@ -38,3 +38,10 @@ header a {
     box-shadow: none;
     width: auto;
 }
+
+
+/* dashboard */
+#profileimage {
+    width: 60px;
+    height: 60px;
+}

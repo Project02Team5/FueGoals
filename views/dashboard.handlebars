@@ -1,7 +1,12 @@
 {{!-- user information will be here --}}
-<div>
-   Hello! {{name}}!
-</div>
+{{#each users as |user|}}
+<div id="dashboardheader">
+   <h3>
+   Hello {{user.name}}!
+</h3>
+ <img id="profileimage" src={{display_image}}>
+   {{/each}}
+   </div>
 {{!-- previous workouts completed stats --}}
 
 

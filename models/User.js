@@ -64,7 +64,7 @@ User.init(
       allowNull: true,
     },
     display_image: {
-      type: DataTypes.STRING,
+      type: DataTypes.BLOB,
       allowNull: true,
     },
   },
