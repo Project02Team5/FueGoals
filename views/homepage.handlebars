@@ -3,10 +3,10 @@
 
 {{!-- Left side of the body for text --}}
 {{#if logged_in}}
-<div class="bodyViewL">
+<div class="bodyViewR">
    {{!-- this is for user stats --}}
    {{#each activities as |activity|}}
-   <h2>Stats for {{user.name}}:</h2></n>
+   <h2 id="userstats">Stats for {{user.name}}:</h2></n>
    {{#if cardioCount}}
    <p class="statlabels">Total cardio workouts completed: {{cardioCount}}</p>
    {{else}}
@@ -38,7 +38,7 @@
    {{/each}}
 </div>
 {{else}}
-<div class="bodyViewL">
+<div class="bodyViewR">
    {{!-- this is for all users stats --}}
    {{#each activities as |activity|}}
    <h2>Stats from our users:</h2></n>
@@ -170,13 +170,13 @@ inkscape:label="Layer 1"
 
 {{!-- right side of body for text --}}
 {{#if logged_in}}
-<div class="bodyViewR">
+<div class="bodyViewL">
    {{!-- This is where user stats per exercises --}}
    {{!-- this is for user stats --}}
    
 </div>
 {{else}}
-<div class="bodyViewR">
+<div class="bodyViewL">
    {{!-- this will be stats from all user's per exercises --}}
    {{!-- this is for all users stats --}}
    

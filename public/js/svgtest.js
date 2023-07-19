@@ -102,7 +102,7 @@ const getExercises = (m, t) => {
         );
       }
       rightEl.innerHTML =
-        "<h3 id='exercisechoices' class='workout-headers'>Workout Choices</h3></br><button class='btnsaveworkouts' onClick='saveWorkouts()'>Save Workouts</button></br>" +
+        "<h3 id='exercisechoices' class='workout-headers'>Workout Choices</h3></br><button class='btn btnsaveworkouts' onClick='saveWorkouts()'>Add to Pending</button></br>" +
         exercises.join(" ");
     });
   }
@@ -131,7 +131,7 @@ const getExercises = (m, t) => {
       );
     }
     leftEl.innerHTML =
-      "<h3 id='pendingworkouts' class='workout-headers'>Pending Workouts</h3></br><button class='btnsaveworkouts' onClick='updateWorkouts()'>Complete Checked Workouts</button></br>" +
+      "<h3 id='pendingworkouts' class='workout-headers'>Pending Workouts</h3></br><button class='btn btnsaveworkouts' onClick='updateWorkouts()'>Mark Complete</button></br>" +
       pending.join(" ");
   });
 };
