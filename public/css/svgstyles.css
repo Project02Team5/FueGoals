@@ -53,7 +53,7 @@ div#bodyDiagram {
 span#bodyContainer {
     display: flex;
     contain: content;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 span#bodySVG {
@@ -62,10 +62,14 @@ span#bodySVG {
 
 .bodyViewL {
     width: 15vw;
+    display: flex;
+    flex-direction: column;
 }
 
 .bodyViewR {
     width: 15vw;
+    display: flex;
+    flex-direction: column;
 }
 
 #aboveBodyTitle {

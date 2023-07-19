@@ -1,47 +1,305 @@
-/* various page styling */
-/* title */
+/* overall page styling --------------- */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* header --------------- */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+/* title --------------- */
 #pagetitle a {
     color: orangered;
     text-shadow: 0 0 2px red;
     text-decoration: none;
+    position: right;
 }
 
-header a {
+/* nav --------------- */
+.navbtns {
     text-decoration: none;
+    background-color: orangered;
+    color: antiquewhite;
+    font-weight: bold;
 }
 
-/* nav */
+.navbtns:hover {
+    text-decoration: none;
+    color: antiquewhite;
+}
+
 #logout {
-    background-color: rgb(227, 61, 61);
+    background-color: rgb(41, 41, 194);
     color: white;
-    font-weight: bold;
+    font-weight: bolder;
     cursor: pointer;
     width: auto;
     height: auto;
 }
 
+#logout:hover {
+    opacity: 15%;
+}
 
-/* workout lists on either side of svg */
+/* main --------------- */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#aboveBodyTitle {
+    color: orangered;
+    font-size: 4vh 4vw;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+
 .workout-headers {
     color: orangered;
-    font-size: 5vh;
-    text-decoration: underline 2px orange;
+    font-size: 3vh 3vw;
+}
+
+/* right in desktop */
+.bodyViewL {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+}
+
+/* left in desktop */
+.bodyViewR {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
 }
 
 .btnsaveworkouts {
-    background-color: rgb(87, 176, 87);
+    background-color:  rgb(87, 176, 87);
     color: white;
     font-weight: bold;
     cursor: pointer;
-    border-color: rgb(87, 176, 87);
-    border-radius: 5%;
-    box-shadow: none;
-    width: auto;
+    width: fit-content;
+    height: auto;
+    font-size: 2vh;
 }
 
 
-/* dashboard */
+.choice-containers {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left space-between;
+    align-items: center;
+}
+
+label {
+    padding-left: 3px;
+}
+
+.pending-containers {
+    width: 100%;
+    /* padding-left: 20px; */
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: left space-between;
+    align-items: center;
+}
+
+/* pending checkboxes */
+.pending-exercises {
+    /* flex-grow: 1; */
+    align-self: left;
+}
+
+/* pending labels */
+.pending-containers label {
+    flex-grow: 4;
+    align-self: center;
+    margin-right: 2px;
+}
+
+/* pending delete buttons */
+.delete-pending {
+    /* flex-grow: 4; */
+    background-color: red;
+    color: antiquewhite;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.3rem;
+    border: 1px solid transparent;
+    margin: 1px;
+    outline: none;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    align-self: right;
+    justify-self: right;
+}
+
+/* pending input boxes */
+.pending-inputs{
+    align-self: flex-end;
+    flex-basis: 100%;
+    width: 90%;
+}
+
+/* dashboard --------------- */
 #profileimage {
     width: 60px;
     height: 60px;
+}
+
+.dashboardincompletebtns {
+    background-color: rgb(41, 41, 194);
+    color: white;
+    font-weight: bolder;
+    cursor: pointer;
+    width: fit-content;
+    height: auto;
+    margin: 4px;
+}
+
+.dashboard-workouts {
+    padding: 4px;
+}
+
+/* svg stylings --------------- */
+path#upperBody {
+    opacity: 0;
+}
+
+path#upperBody:hover {
+    fill: black;
+    opacity: 1;
+    cursor: pointer;
+}
+
+path#head {
+    opacity: 0;
+}
+
+path#head:hover {
+    fill: red;
+    opacity: 1;
+    cursor: pointer;
+}
+
+path#legs {
+    opacity: 0;
+}
+
+path#legs:hover {
+    fill: yellow;
+    opacity: 1;
+    cursor: pointer;
+}
+
+path#core {
+    opacity: 0;
+}
+
+path#core:hover {
+    opacity: 1;
+    fill: orange;
+    cursor: pointer;
+}
+
+div#bodyDiagram {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-content: center;
+}
+
+#svg2 {
+    width: 100%;
+    height: 65vh;
+}
+
+span#bodyContainer {
+    display: flex;
+    contain: content;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#bodySVG {
+    opacity: .5;
+    width: 40%;
+}
+
+
+
+/* mobile adjustments */
+@media screen and (max-width: 600px) {
+    header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #aboveBodyTitle {
+        display: none;
+    }
+
+    #bodyContainer {
+        display: flex;
+        contain: content;
+        flex-direction: column;
+        justify-content: center;
+    }
+    /* bottom in mobile */
+    .bodyViewL {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: center;
+    }
+    
+    #bodySVG {
+        opacity: .5;
+        align-self: flex-start;
+        width: 100%;
+        order: -1;
+    }
+    /* top in mobile */
+    .bodyViewR {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .choice-containers {
+        width: 75%;
+        padding-left: 20px;
+        display: flex;
+        justify-content: left space-between;
+        align-items: left;
+    }
+    .pending-containers {
+        width: 90%;
+        padding-left: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        align-items: left;
+    }
 }
