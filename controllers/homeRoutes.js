@@ -4,8 +4,8 @@ const { User, Activity } = require("../models");
 const withAuth = require("../utils/auth");
 const { Sequelize, Op } = require("sequelize");
 const request = require("request");
-const multer = require('multer');
-const { s3Uploadv2 } = require('../s3Service');
+const multer = require('multer')
+const { s3Uploadv2 } = require('./s3Service.js');
 
 // multer-aws
 const storage = multer.memoryStorage({
@@ -20,7 +20,6 @@ const storage = multer.memoryStorage({
 
 // filters file type by images
 const fileFilter = (req, file, cb) => {
-  console.log(file.mimetype);
   if (file.mimetype.split("/")[0] === 'image') {
     cb(null, true)
   } else {
@@ -36,10 +35,10 @@ const upload = multer({
 });
 
 // multiple images by fields posts
-// const multiUpload = upload.fields([
-//   { name: "profile" },
-//   { name: "progress" },
-// ]);
+const multiUpload = upload.fields([
+  { name: "profile" },
+  // { name: "progress" },
+]);
 
 
 // sets time period as user defined interval deducted from today
@@ -397,28 +396,31 @@ router.delete("/exercises", async (req, res) => {
   }
 });
 
-// to upload images
-router.post("/upload", 
-// multiUpload,
- async (req, res) => {
-  try {
-    console.log(req.files);
-    const result = await s3Uploadv2(req.files);
-    const userImage = await User.update(
-      {
-        display_image: result.Location
-      },
-      {
-        where: {
-          user_id: req.session.user_id
-        }
-      },
-      );
-      res.json({ status: "successfully uploaded", result });
 
-  } catch (err) {
-    console.log('not hello world');
-    res.status(500).json(err);
+router.post("/upload", multiUpload, async (req, res) => {
+  try {
+    const result = await s3Uploadv2(req.files);
+    const userId = req.session.user_id;
+
+    // Wait for both asynchronous operations to complete
+    await Promise.all([
+      result, // Wait for the s3Uploadv2 function to complete and return the result
+      User.findOne({ where: { id: userId } }) // Wait for the user record to be fetched
+    ])
+    .then(([result, user]) => {
+      if (user) {
+        // Update the display_image field with the uploaded image location
+        user.display_image = result[0].Location;
+        return user.save(); // Save the updated user record
+      } else {
+        throw new Error("User not found");
+      }
+    });
+
+    res.json({ status: "success", result });
+  } catch (error) {
+    console.log('Image upload failed:', error);
+    res.status(500).json({ error: "Image upload failed" });
   }
 });
 
