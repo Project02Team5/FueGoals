@@ -2,21 +2,21 @@ document.getElementById("imageForm").addEventListener("submit", (event) => {
   event.preventDefault(); // Prevent the default form submission
 
   const fileInput = document.getElementById("myFile");
-  const file = JSON.stringify(fileInput.files[0]); // Get the selected file
+  const file = fileInput.files[0]; // Get the selected file
 
-  // const formData = new FormData();
-  // formData.append("filename", file); // Append the file to the FormData object
+  const formData = new FormData();
+  formData.append("profile", file); // Append the file to the FormData object
 
-  console.log(file);
+  console.log(formData);
 
   fetch("/upload", {
     method: "POST",
-   body: file,
-  headers: {'Content-Type': 'multipart/form-data'},
+    body: formData,
   })
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // Log the response from the server
+      window.location.href = "/dashboard";
     })
     .catch((error) => {
       console.log('hello world');

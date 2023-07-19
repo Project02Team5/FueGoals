@@ -4,16 +4,16 @@
    <h3>
    Hello {{user.name}}!
 </h3>
+
  <img id="profileimage" src={{display_image}}>
    {{/each}}
    </div>
 {{!-- previous workouts completed stats --}}
 <form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data">
-  <input type="file" id="myFile" name="filename" accept="image/*">
+  <input type="file" id="myFile" name="profile" accept="image/*">
   <input type="submit" value="Upload">
 </form>
 
-<img src="{{users.display_image}}" alt="User's Profile Picture" class="profilePic">
 
 {{#each activities as |activity|}}
  <div id={{id}} class="card dashboard-workouts">
