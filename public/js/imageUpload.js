@@ -16,6 +16,7 @@ document.getElementById("imageForm").addEventListener("submit", (event) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // Log the response from the server
+      window.location.href = "/dashboard";
     })
     .catch((error) => {
       console.log('hello world');
