@@ -16,15 +16,16 @@
 <img src="{{users.display_image}}" alt="User's Profile Picture" class="profilePic">
 
 {{#each activities as |activity|}}
- <div id={{id}} class="card">
+ <div id={{id}} class="card dashboard-workouts">
     <p>Type: {{cap activity_type}}</p>
+    <p class="workout-dates">Date Completed: {{format_date updatedAt}}</p>
     <p>Activity: {{activity_performed}}</p>
     <p>Activity Duration: {{activity_duration}}</p>
     <p>Number of sets: {{activity_sets}}</p>
     {{#if strength_weight}}
     <p>Total lbs lifted: {{strength_weight}}</p>
     {{/if}}
-    <button onClick="incompleteWorkout(this.parentNode.id)">Mark Workout Incomplete</button>
+    <button class="btn dashboardincompletebtns" onClick="incompleteWorkout(this.parentNode.id)">Mark Incomplete</button>
  </div>
 {{/each}}
 
