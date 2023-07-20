@@ -22,11 +22,11 @@ Activity.init(
     },
     activity_type: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     activity_performed: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     activity_duration: {
       type: DataTypes.INTEGER,
@@ -42,7 +42,7 @@ Activity.init(
     },
     workout_completed: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     }
   },
   {

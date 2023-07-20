@@ -163,7 +163,7 @@ router.get("/", async (req, res) => {
         ],
         include: {
           model: User,
-          attributes: ["activity_interval", "name"],
+          attributes: ["name"],
         },
         where: {
           [Op.and]: [
