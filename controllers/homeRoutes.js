@@ -213,6 +213,10 @@ router.get("/dashboard", withAuth, async (req, res) => {
         workout_completed: true,
         user_id: req.session.user_id,
       },
+      oder: [
+        'updatedAt',
+        'DESC'
+      ],
     });
 
     const userData = await User.findAll({
