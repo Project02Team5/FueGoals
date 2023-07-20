@@ -7,11 +7,14 @@
 <h3>
    Hello {{user.name}}!
 </h3>
-
-   {{/each}}
    </div>
+   {{/each}}
+<button id="profilePicture">
+Add a Profile Picture!
+</button>
 {{!-- previous workouts completed stats --}}
-<form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data">
+
+<form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data" style="display: none;">
   <input type="file" id="myFile" name="profile" accept="image/*">
   <input type="submit" value="Upload">
 </form>

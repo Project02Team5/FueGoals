@@ -167,6 +167,7 @@ label {
     flex-direction: row;
     justify-content: space-evenly;
     align-content: center;
+    margin-bottom: 2em;
 }
 
 #profileimage {
@@ -261,6 +262,37 @@ footer {
     font-weight: bolder;
 }
 
+button#profilePicture {
+    width: 25vw;
+    background-color: #0D698B;
+    color: white;
+    font-weight: bolder;
+    cursor: pointer;
+    height: auto;
+}
+
+input {
+    background-color: #0D698B;
+    color: white;
+    font-weight: bolder;
+    cursor: pointer;
+    height: auto;
+    width: auto;
+}
+
+input#myFile {
+    background-color: #C7D7DE;
+    color: #1A1A1D;
+}
+
+input::file-selector-button {
+    background-color: #0D698B;
+    color: white;
+    font-weight: bolder;
+    cursor: pointer;
+    height: auto;
+    width: auto;
+}
 
 /* mobile adjustments */
 @media screen and (max-width: 830px) {
