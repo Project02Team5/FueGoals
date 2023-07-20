@@ -35,34 +35,6 @@ User.init(
         len: [8],
       },
     },
-    activity_interval: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    cardio_frequency: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    strength_frequency: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    flexibility_frequency: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    cardio_duration: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    strength_duration: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    flexibility_duration: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     display_image: {
       type: DataTypes.BLOB,
       allowNull: true,
