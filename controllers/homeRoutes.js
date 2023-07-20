@@ -95,7 +95,7 @@ router.get("/", async (req, res) => {
           ],
           [
             Sequelize.literal(
-              '(SELECT activity_sets * strength_weight FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+              '(SELECT SUM(activity_sets) * SUM(strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
             ),
             "poundsLifted",
           ],
@@ -150,13 +150,13 @@ router.get("/", async (req, res) => {
           ],
           [
             Sequelize.literal(
-              '(SELECT activity_duration * activity_sets FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+              '(SELECT SUM(activity_duration) * SUM(activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
             ),
             "flexibilityDuration",
           ],
           [
             Sequelize.literal(
-              '(SELECT activity_sets * strength_weight FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+              '(SELECT SUM(activity_sets) * SUM(strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
             ),
             "poundsLifted",
           ],
