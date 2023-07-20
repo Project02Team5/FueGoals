@@ -120,43 +120,43 @@ router.get("/", async (req, res) => {
         attributes: [
           [
             Sequelize.literal(
-              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'
+              `(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "cardio" AND user_id = ${req.session.user_id})`
             ),
             "cardioCount",
           ],
           [
             Sequelize.literal(
-              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+              `(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "strength" AND user_id = ${req.session.user_id})`
             ),
             "strengthCount",
           ],
           [
             Sequelize.literal(
-              '(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+              `(SELECT COUNT(workout_completed) FROM activity WHERE workout_completed = true AND activity_type = "flexibility" AND user_id = ${req.session.user_id})`
             ),
             "flexibilityCount",
           ],
           [
             Sequelize.literal(
-              '(SELECT SUM(activity_duration * activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "cardio")'
+              `(SELECT SUM(activity_duration * activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "cardio" AND user_id = ${req.session.user_id})`
             ),
             "cardioDuration",
           ],
           [
             Sequelize.literal(
-              '(SELECT SUM(activity_duration * activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+              `(SELECT SUM(activity_duration * activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "strength" AND user_id = ${req.session.user_id})`
             ),
             "strengthDuration",
           ],
           [
             Sequelize.literal(
-              '(SELECT SUM(activity_duration * activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility")'
+              `(SELECT SUM(activity_duration * activity_sets) FROM activity WHERE workout_completed = true AND activity_type = "flexibility" AND user_id = ${req.session.user_id})`
             ),
             "flexibilityDuration",
           ],
           [
             Sequelize.literal(
-              '(SELECT SUM(activity_sets * strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength")'
+              `(SELECT SUM(activity_sets * strength_weight) FROM activity WHERE workout_completed = true AND activity_type = "strength" AND user_id = ${req.session.user_id})`
             ),
             "poundsLifted",
           ],
@@ -167,7 +167,9 @@ router.get("/", async (req, res) => {
         },
         where: {
           [Op.and]: [
-            { user_id: req.session.user_id },
+            { 
+              user_id: req.session.user_id 
+            },
             {
               createdAt: {
                 [Op.gt]: intervalDate(interval),
