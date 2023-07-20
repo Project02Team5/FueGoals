@@ -159,6 +159,8 @@ label {
     align-self: flex-end;
     flex-basis: 100%;
     width: 90%;
+    background-color: white;
+    color: black;
 }
 
 /* dashboard --------------- */
