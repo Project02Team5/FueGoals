@@ -1,3 +1,14 @@
+document.getElementById('profilePicture').addEventListener('click', (event) => {
+  event.preventDefault(); // Prevent the default form submission
+  if (
+    document.getElementById('imageForm').style.display === "none"
+    ) {
+      document.getElementById('imageForm').style.display=""
+    } else {
+      document.getElementById('imageForm').style.display="none"
+    }
+});
+
 document.getElementById("imageForm").addEventListener("submit", (event) => {
   event.preventDefault(); // Prevent the default form submission
 
