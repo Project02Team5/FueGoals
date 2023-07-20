@@ -207,7 +207,7 @@ router.get("/dashboard", withAuth, async (req, res) => {
     const activityData = await Activity.findAll({
       include: {
         model: User,
-        attributes: ["activity_interval", "name"],
+        attributes: ["name"],
       },
       where: {
         workout_completed: true,
