@@ -3,6 +3,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: #C7D7DE;
+    color: #1A1A1D;
+
 }
 
 /* header --------------- */
@@ -15,7 +18,7 @@ header {
 
 /* title --------------- */
 #pagetitle a {
-    color: orangered;
+    color: #FF6501;
     text-shadow: 0 0 2px red;
     text-decoration: none;
     position: right;
@@ -24,7 +27,7 @@ header {
 /* nav --------------- */
 .navbtns {
     text-decoration: none;
-    background-color: orangered;
+    background-color: #FF6501;
     color: antiquewhite;
     font-weight: bold;
 }
@@ -35,7 +38,7 @@ header {
 }
 
 #logout {
-    background-color: rgb(41, 41, 194);
+    background-color: #0D698B;
     color: white;
     font-weight: bolder;
     cursor: pointer;
@@ -56,7 +59,7 @@ main {
 }
 
 #aboveBodyTitle {
-    color: orangered;
+    color: #FF6501;
     font-size: 4vh 4vw;
     text-align: center;
     margin-bottom: 50px;
@@ -64,7 +67,7 @@ main {
 
 
 .workout-headers {
-    color: orangered;
+    color: #FF6501;
     font-size: 3vh 3vw;
 }
 
@@ -159,13 +162,20 @@ label {
 }
 
 /* dashboard --------------- */
+#dashboardheader {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
 #profileimage {
     width: 60px;
     height: 60px;
 }
 
 .dashboardincompletebtns {
-    background-color: rgb(41, 41, 194);
+    background-color: #0D698B;
     color: white;
     font-weight: bolder;
     cursor: pointer;
@@ -184,7 +194,7 @@ path#upperBody {
 }
 
 path#upperBody:hover {
-    fill: black;
+    fill: #FF6501;
     opacity: 1;
     cursor: pointer;
 }
@@ -194,7 +204,7 @@ path#head {
 }
 
 path#head:hover {
-    fill: red;
+    fill: #FF6501;
     opacity: 1;
     cursor: pointer;
 }
@@ -204,7 +214,7 @@ path#legs {
 }
 
 path#legs:hover {
-    fill: yellow;
+    fill: #FF6501;
     opacity: 1;
     cursor: pointer;
 }
@@ -215,7 +225,7 @@ path#core {
 
 path#core:hover {
     opacity: 1;
-    fill: orange;
+    fill: #FF6501;
     cursor: pointer;
 }
 
