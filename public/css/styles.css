@@ -1,3 +1,6 @@
+* {
+    font-family: Tektur;
+}
 /* overall page styling --------------- */
 body {
     display: flex;
@@ -5,7 +8,6 @@ body {
     justify-content: center;
     background-color: #C7D7DE;
     color: #1A1A1D;
-
 }
 
 /* header --------------- */
