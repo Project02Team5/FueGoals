@@ -70,7 +70,7 @@ main {
 
 /* right in desktop */
 .bodyViewL {
-    width: 25%;
+    width: 25vw;
     display: flex;
     flex-direction: column;
     justify-content: left;
@@ -79,7 +79,7 @@ main {
 
 /* left in desktop */
 .bodyViewR {
-    width: 25%;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     justify-content: left;
@@ -176,6 +176,7 @@ label {
 
 .dashboard-workouts {
     padding: 4px;
+    margin-top: 10px;
 }
 
 /* svg stylings --------------- */
@@ -245,10 +246,11 @@ span#bodyContainer {
 
 
 /* mobile adjustments */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 830px) {
     header {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
         justify-content: center;
     }
 
