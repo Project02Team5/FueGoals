@@ -28,7 +28,9 @@ https://opensource.org/licenses/ISC
 
 
 ## Questions
-Email: athur1104@gmail.com, jmc435@gmail.com
+Email: 
+- athur1104@gmail.com
+- jmc435@gmail.com
         
     
 GitHub: 
@@ -36,7 +38,7 @@ GitHub:
 - [Jordan GitHub](https://github.com/creechj)
         
     
-GitHub Repo: [GitHub repository](https://github.com/Project02Team5/Project02)
+GitHub Repo: [GitHub repository](https://github.com/Project02Team5/FueGoals)
         
   
 

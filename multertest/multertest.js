@@ -5,19 +5,7 @@ require("dotenv").config();
 
 const app = express();
 
-
-// // custom file names
-// // format file's (field name)-(original file name) maybe change to user_id?
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads");
-//   },
-//   filename: (req, file, cb) => {
-//     const { originalname, fieldname } = file;
-//     cb(null, `${fieldname}-${originalname}`)
-//   },
-// });
-
+// custom format file's (field name)-(original file name) maybe change to user_id?
 const storage = multer.memoryStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
